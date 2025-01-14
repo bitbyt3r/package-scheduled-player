@@ -51,12 +51,13 @@ def main():
         for room in config.rooms:
             if room['serial'] == os.environ['SERIAL']:
                 current_room = room
-        query = ""
-        if current_room and current_room['location']:
-            query = f"?locations={current_room['location']}"
 
         events = []
         for schedule in config.schedule_urls:
+            query = ""
+            if current_room and current_room['location']:
+                query = "&" if "?" in schedule['url'] else "?"
+                query += "locations=" + current_room['location']
             print >>sys.stderr, "fetching %s" % schedule['url']
             events.extend(importer.get_schedule(schedule['url']+query, schedule['group']))
             print >>sys.stderr, "done. now ", len(events)
