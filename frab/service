@@ -47,17 +47,17 @@ def main():
             time.sleep(1)
             continue
 
-        current_room = None
+        locations = []
         for room in config.rooms:
             if room['serial'] == os.environ['SERIAL']:
-                current_room = room
+                locations.append(room['location'])
 
         events = []
         for schedule in config.schedule_urls:
             query = ""
-            if current_room and current_room['location']:
+            if locations:
                 query = "&" if "?" in schedule['url'] else "?"
-                query += "locations=" + current_room['location']
+                query += "locations=" + ",".join(locations)
             print >>sys.stderr, "fetching %s" % schedule['url']
             events.extend(importer.get_schedule(schedule['url']+query, schedule['group']))
             print >>sys.stderr, "done. now ", len(events)
