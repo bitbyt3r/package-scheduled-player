@@ -108,6 +108,12 @@
             "type": "device",
             "default": ""
         }, {
+            "title": "Location ID",
+            "ui_width": 3,
+            "name": "location",
+            "type": "string",
+            "default": ""
+        }, {
             "title": "Group",
             "ui_width": 3,
             "name": "group",
