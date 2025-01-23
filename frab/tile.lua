@@ -144,7 +144,8 @@ local function check_next_talk()
         -- Find next talk
         if current_room and (current_room.group == "*" or current_room.group == talk.group) then
             if not room_next[talk.place] and 
-                talk.start_unix > now - 25 * 60 then
+                -- talk.start_unix > now - 25 * 60 then
+                now < talk.end_unix - 15 * 60 then
                 room_next[talk.place] = talk
             end
         end
